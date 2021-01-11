@@ -41,8 +41,8 @@ public class Controller {
 		return "/index";
 	}
 	
-	@RequestMapping("/beforeSignUp")
-	public String beforeSignUp() {
+	@RequestMapping("/beforeSignup")
+	public String beforeSignup() {
 		return "/signup";
 	}
 	
@@ -217,7 +217,7 @@ public class Controller {
 	// 답글 작성폼
 	@RequestMapping(value="/board/writeFormPro", method=RequestMethod.POST)
 	public String writeFormPro(Model model, Board board) {
-		System.out.println(board);
+		//System.out.println(board);
 		boardservice.writeForm(board);
 		
 		return "redirect:/board/list";
