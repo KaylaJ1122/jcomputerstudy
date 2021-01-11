@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcomputerstudy.example.mapper.BoardMapper">
+	
+	<!-- 게시물 목록 -->
+	<select id="selectBoardList" resultType="Board">
+	
+	  SELECT			b_id as bId,
+						b_title as bTitle,
+						b_content as bContent,
+						b_writer as bWriter,
+						b_view as bView,
+						b_group as bGroup,
+						b_groupOrd as bGroupOrd,
+						b_depth as bDepth
+		
+		FROM			jc_board
+		ORDER BY 		b_group desc, b_groupOrd asc, b_id desc 
+		<!-- b_group을 내림차순, b_groupOrd를 오름차순 -->
+		
+	</select>
+	
+	<!-- 게시글 답글 순서 -->
+	<update id="updatebGroup" parameterType="Board">
+		update 	jc_board
+		set		b_group = #{bGroup}
+		where	b_id = #{bId}
+	</update>
+	
+	
+	<!-- 답글작성 -->
+	<insert id="writeForm" parameterType="Board">
+		
+		insert into 
+			jc_board(
+					 b_title,
+					 b_content,
+					 b_writer,
+					 b_view,
+					 b_group,
+					 b_groupOrd,
+					 b_depth) 
+				values(
+						#{bTitle},
+						#{bContent},
+						#{bWriter},
+						#{bView},
+						#{bGroup},
+						#{bGroupOrd},
+						#{bDepth})
+				 
+	</insert>
+	<select id="max" parameterType="Board" resultType="int">
+	
+		SELECT 		MAX(b_groupOrd) AS b_groupOrd
+		FROM 		jc_board 
+		WHERE		b_group = #{bId}
+		
+	</select>
+	<!-- 답글순서
+	<delete id="updatebGroupOrd" parameterType="board">
+		UPDATE 		jc_board
+		SET			b_group = b_groupOrd +1,
+				
+		WHERE 		b_group = #{bGroup}
+			AND 	b_groupOrd = #{bGroupOrd}
+	</delete>   -->
+	
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="Board">
+		insert into 
+			jc_board(b_title, b_content, b_writer, b_group, b_groupOrd)
+				values(#{bTitle}, #{bContent}, #{bWriter}, #{bGroup}, #{bGroupOrd})
+				
+		<selectKey keyProperty="bId" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>	
+	</insert>
+	
+
+	
+	<!-- 게시물 조회,(파라미터타입:매퍼에 들어오는 데이터, 리절트타입:매퍼가 내보내는데이터 -->
+	<select id="view" parameterType="int" resultType="Board">
+		SELECT			b_id as bId,
+						b_title as bTitle,
+						b_content as bContent,
+						b_writer as bWriter,
+						b_view as bView
+		FROM			jc_board
+		
+		WHERE			b_id = #{bId}			
+	</select>
+	
+	<!--   게시물 조회수-->
+	<update id="increase" parameterType="Board">
+		update 		jc_board
+		set 		b_view = #{bView} + 1
+	
+		where		b_id = #{bId}
+	</update>
+	
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="Board">
+		update jc_board
+		set		b_title = #{bTitle},
+				b_content = #{bContent},
+				b_writer = #{bWriter}
+		where b_id = #{bId}
+	</update>
+	
+	<!-- 게시물 삭제 --> <!-- 게시물 번호만 있으면 삭제가능해서 매개변수타입int로 함 -->
+	<delete id="delete" parameterType="int">
+		delete
+		from 	jc_board
+		where 	b_id = #{bId}
+	</delete>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="boardCount" resultType="int">
+		select count(*) from jc_board
+	</select>
+	
+	<!-- 게시글 페이징 -->
+	<select id="listPageBackup" resultType="Board" parameterType="int">
+	
+		SELECT			b_id as bId,
+						b_title as bTitle,
+						b_content as bContent,
+						b_writer as bWriter,
+						b_view as bView
+		FROM			jc_board
+		ORDER BY 		bId desc
+		LIMIT			#{pageNum},3
+		
+	</select>
+	
+	<!-- 게시글 검색 -->
+	<select id="listPage" resultType="Board" parameterType="Pagination">
+		SELECT		b_id as bId,
+					b_title as bTitle,
+					b_content as bContent,
+					b_writer as bWriter,
+					b_view as bView
+		FROM		jc_board
+		<if test='search.equals("bTitle")'>
+			WHERE b_title LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bContent")'>
+			WHERE b_content LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bTitle_bContent")'>
+			WHERE b_title LIKE concat('%', #{keyword}, '%')
+				or b_content LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bWriter")'>
+			WHERE b_writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		ORDER BY		bId desc
+		LIMIT			#{pageNum},3
+	</select>
+	
+		<!-- 댓글 조회 -->
+	<select id="replyList" parameterType="int" resultType="Reply">
+		select		r_rownum as rRownum,
+					r_id as rId,
+					username as rWriter,
+					r_content as rContent,
+					r_dateTime as rDateTime
+		from		jc_reply
+		where		r_id = #{rId}
+					
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="replyWrite" parameterType="Reply">
+		insert into jc_reply(r_id, username, r_content, r_dateTime)
+			value(#{rId}, #{username}, #{rContent},#{rDateTime})
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="replyModify" parameterType="Reply">
+		update 	jc_reply 
+		set		username = #{username},
+				r_content = #{rContent},
+		where 	r_rownum = #{rRownum}
+			and r_id = #{rId}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete" parameterType="Reply">
+		delete from jc_reply
+		where r_rownum = #{rRownum}
+			and r_id = #{rId}
+	</delete>
+	
+	<!-- 답글 -->
+	<select id="boardReply" parameterType="Board">
+		insert into jc_board
+		values(b_id_b_groupOrd.nextval, b_id_b_groupOrd.currval,1,0);
+	</select>
+</mapper>
