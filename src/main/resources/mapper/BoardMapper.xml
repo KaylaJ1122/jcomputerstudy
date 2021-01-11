@@ -54,7 +54,7 @@
 	
 		SELECT 		MAX(b_groupOrd) AS b_groupOrd
 		FROM 		jc_board 
-		WHERE		b_group = #{bId}
+		WHERE		b_group = #{bGroup}
 		
 	</select>
 	<!-- 답글순서

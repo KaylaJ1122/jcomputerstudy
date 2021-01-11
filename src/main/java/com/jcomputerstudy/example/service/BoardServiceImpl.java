@@ -83,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
 		int groupOrdMax = boardmapper.max(board)+1;
 		/*board.setbGroupOrd(bGroupOrd);*/
 		
-		board.setbGroupOrd(board.getbGroupOrd());
+		board.setbGroupOrd(groupOrdMax);
 		boardmapper.writeForm(board);
 		/*board.setbGroupOrd(board.getbGroup());
 		boardmapper.updatebGroupOrd(board);*/
