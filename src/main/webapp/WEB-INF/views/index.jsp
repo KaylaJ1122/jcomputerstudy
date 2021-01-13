@@ -48,6 +48,7 @@
          <sec:authorize access="isAuthenticated()">        
                <a href="/user/info">내 정보</a>
                <a href="/admin">관리자</a>
+               
             </sec:authorize>
         </div>   
         

@@ -14,7 +14,10 @@
 						b_groupOrd as bGroupOrd,
 						b_depth as bDepth
 		
-		FROM			jc_board
+		
+		FROM			jc_board ta
+		LEFT JOIN jc_user tb ON ta.b_writer = tb.u_name
+		
 		ORDER BY 		b_group desc, b_groupOrd asc, b_id desc 
 		<!-- b_group을 내림차순, b_groupOrd를 오름차순 -->
 		
@@ -86,7 +89,8 @@
 						b_content as bContent,
 						b_writer as bWriter,
 						b_view as bView
-		FROM			jc_board
+		FROM			jc_board ta
+		LEFT JOIN 		jc_user tb ON ta.b_writer = tb.u_id
 		
 		WHERE			b_id = #{bId}			
 	</select>

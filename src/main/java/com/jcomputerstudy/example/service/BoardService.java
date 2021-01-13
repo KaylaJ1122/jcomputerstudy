@@ -5,6 +5,8 @@ import com.jcomputerstudy.example.domain.Board;
 import com.jcomputerstudy.example.domain.Pagination;
 import com.jcomputerstudy.example.domain.Reply;
 
+import org.springframework.security.core.GrantedAuthority;
+
 
 public interface BoardService {
 	// 게시물 목록
@@ -33,6 +35,7 @@ public interface BoardService {
 	
 	// 답글
 	public void writeForm(Board board);
+	
 	
 
 	

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,9 @@
 </div>
 
 <form method="post" action="/board/modify-process">
-	<input type="hidden" name="bId" value="${board.bId }"/>
+	
+	<!--  <input type="hidden" name="bId" value="${board.bId }"/>-->
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token } }"/>
 	<label>제목</label>
 	<input type="text" name="bTitle" value="${board.bTitle }"/><br/>
 	
@@ -26,7 +28,16 @@
 	<textarea cols="50" rows="5" name="bContent">${board.bContent}</textarea><br/>
 	
 	<button type="submit">완료</button>
+	
 </form>
+
+<div>
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal" var="principal"/>
+		<h2>${principal }</h2>
+	</sec:authorize>
+	
+</div>
 
 </body>
 </html>

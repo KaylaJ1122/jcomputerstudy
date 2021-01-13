@@ -2,6 +2,10 @@ package com.jcomputerstudy.example.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 import com.jcomputerstudy.example.domain.Board;
 import com.jcomputerstudy.example.domain.Pagination;
@@ -89,4 +93,12 @@ public class BoardServiceImpl implements BoardService {
 		boardmapper.updatebGroupOrd(board);*/
 
 	}
+	
+//	@Override
+//	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//		String name = authentication.getUsername();
+//		String password = authentication.getCredentials().toString();
+//		
+//		if(username.equals("b_writer"))
+//	}
 }

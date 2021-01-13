@@ -53,7 +53,7 @@
 		 <foreach item="authority" index="index" collection="authorities" separator=",">
 			(#{username}, #{authority.role})
 		 </foreach>
-		 ON DUPICATE KEY
+		 ON DUPLICATE KEY
 		 UPDATE
 		 	u_id = #{username}
 	</insert>

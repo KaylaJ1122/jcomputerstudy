@@ -2,6 +2,7 @@ package com.jcomputerstudy.example.controller;
 
 import java.security.Provider.Service;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.jcomputerstudy.example.service.UserService;
 @org.springframework.stereotype.Controller
 public class Controller {
 	
+	
 	public final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired UserService userservice;
 	@Autowired BoardService boardservice;
@@ -37,7 +39,7 @@ public class Controller {
 //		logger.debug("debug");
 //		logger.info("info");
 //		logger.error("error");
-//		
+		
 		return "/index";
 	}
 	
@@ -89,6 +91,8 @@ public class Controller {
 	public String denied(Model model) {
 		return "/denied";
 	}
+
+	
 	
 	// 게시물 목록
 	@RequestMapping("/board/list")
