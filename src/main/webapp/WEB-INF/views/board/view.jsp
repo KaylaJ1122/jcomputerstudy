@@ -27,13 +27,23 @@
 	<textarea cols="50" rows="5" name="bContent">${board.bContent }</textarea><br/>
 
 	<div> <!-- 조회페이지에서 수정페이지로 이동 -->
-		
-		<a href="/board/modify?bId=${board.bId}">수정</a>
-		<a href="/board/delete?bId=${board.bId}">삭제</a>
+	<c:choose>
+		<c:when test="${board.bWriter eq user.uName}">
+			<a href="/board/modify?bId=${board.bId}">수정</a>
+			<a href="/board/delete?bId=${board.bId}">삭제</a>
+		</c:when>
+	</c:choose>
 		<a href="/board/writeForm?bId=${board.bId }">답글</a>
-	</div>
 	
-
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN') or ${board.bWriter == user.username }">
+		<a href="/board/delete?bId=${board.bId }">삭제</a>
+	</sec:authorize>
+	
+	
+	
+	
+	
+	</div>
 </form>
 
 <!-- 댓글시작부분 -->

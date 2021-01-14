@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +16,8 @@
 
 <form method="post" action="/board/modify-process">
 	
-	<!--  <input type="hidden" name="bId" value="${board.bId }"/>-->
-	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token } }"/>
+	<input type="hidden" name="bId" value="${board.bId }"/>
+	<!-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token } }"/> -->
 	<label>제목</label>
 	<input type="text" name="bTitle" value="${board.bTitle }"/><br/>
 	
