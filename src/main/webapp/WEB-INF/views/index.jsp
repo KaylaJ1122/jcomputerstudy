@@ -53,7 +53,7 @@
         </div>   
         
         <div>
-        	<a href="/board/list">게시물 목록</a> <br>
+        	<a href="/board/listPage">게시물 목록</a> <br>
         	<a href="/board/write">게시물 작성</a><br>
         	
         </div>

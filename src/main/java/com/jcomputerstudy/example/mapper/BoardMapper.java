@@ -22,7 +22,7 @@ public interface BoardMapper {
 	// 게시물 삭제
 	public void delete(int bId);
 	// 게시물 총 갯수
-	public int boardCount();
+	public int boardCount(Pagination pagination);
 	// 게시물 페이징 + 검색
 	public List<Board> listPage(Pagination page);
 	

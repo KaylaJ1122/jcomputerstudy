@@ -51,8 +51,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	// 게시물 총 갯수
 	@Override
-	public int boardCount() {
-		return boardmapper.boardCount();
+	public int boardCount(Pagination pagination) {
+		return boardmapper.boardCount(pagination);
 	}
 	// 게시물 페이징 + 검색
 	@Override

@@ -11,8 +11,8 @@ public class Pagination {
 	int lastPage;	// (boardCount/화면에표시할개수), pagination 마지막 번호
 	int prevPage;	// pagination의 이전 목록
 	int nextPage;	// pagination의 다음 목록
-	String search;	// 검색 타입
-	String keyword;	// 검색 키워드
+	String search = "";	// 검색 타입
+	String keyword = "";	// 검색 키워드
 
 	public static final int pageUnit=5;//한번에 불러 올 pagination수
 	public static final int perPage=3; //한번에 불러 올 boardCount 수
@@ -23,9 +23,9 @@ public class Pagination {
 	}
 	public Pagination(int boardCount, int page) {
 		this.page = page;
-		this.pageNum = (page-1)*3;
+		this.pageNum = (page-1)*perPage;
 		startPage = ((page-1)/pageUnit)*pageUnit+1;
-		lastPage = (int) ((int)Math.ceil(boardCount)/(float)perPage);
+		lastPage = (int)Math.ceil(boardCount/(float)perPage);
 		endPage = startPage+pageUnit-1;
 		endPage = endPage < lastPage ? endPage : lastPage;
 //		prevPage = (endPage = pageUnit);

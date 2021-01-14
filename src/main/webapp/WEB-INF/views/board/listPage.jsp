@@ -123,7 +123,7 @@
 					</c:when>
 					<c:when test="${p != pagination.page }">
 						<li>
-							<a href="/board/listPage?page=${p }">${p }</a>
+							<a href="/board/listPage?page=${p}&search=${pagination.search}&keyword=${pagination.keyword}">${p }</a>
 						</li>
 					</c:when>
 				</c:choose>
@@ -148,7 +148,7 @@
 			let keyword = document.getElementsByName("keyword")[0].value;
 
 			location.href="/board/listPage?page=1" + "&search=" + search + "&keyword=" + keyword;
-			};
+		};
  	</script>
  
  	

@@ -120,8 +120,25 @@
 	</delete>
 	
 	<!-- 게시물 총 갯수 -->
-	<select id="boardCount" resultType="int">
-		select count(*) from jc_board
+	<select id="boardCount" resultType="int" parameterType="Pagination">
+		SELECT 	count(*) 
+		FROM 	jc_board
+		<if test='search.equals("bTitle")'>
+			WHERE b_title LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bContent")'>
+			WHERE b_content LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bTitle_bContent")'>
+			WHERE b_title LIKE concat('%', #{keyword}, '%')
+				or b_content LIKE concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='search.equals("bWriter")'>
+			WHERE b_writer LIKE concat('%', #{keyword}, '%')
+		</if>
 	</select>
 	
 	<!-- 게시글 페이징 -->

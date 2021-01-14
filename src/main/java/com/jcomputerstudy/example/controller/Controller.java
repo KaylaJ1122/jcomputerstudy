@@ -97,12 +97,12 @@ public class Controller {
 	// 게시물 목록
 	@RequestMapping("/board/list")
 	public String list(Model model) {
-		List<Board> list =  boardservice.selectBoardList();
+/*		List<Board> list =  boardservice.selectBoardList();
 		int boardCount = boardservice.boardCount();
 		
 		model.addAttribute("list", list);
 		model.addAttribute("boardCount", boardCount);
-		// 모델은 컨트롤러와 뷰를 연결해주는 역할을 함
+		// 모델은 컨트롤러와 뷰를 연결해주는 역할을 함*/
 		return "/board/list";
 	}
 	// 게시물 작성 (작성폼을 띄우는 것)
@@ -171,12 +171,15 @@ public class Controller {
 	
 	// 게시물 페이징
 	@RequestMapping(value="/board/listPage", method=RequestMethod.GET)
-	public String listPage(Pagination pagination, Model model, 
-			@RequestParam(value="page", required=false) int page,
-			@RequestParam(value="search", required=false, defaultValue="bTitle") String search,
-			@RequestParam(value="keyword", required=false, defaultValue="") String keyword) {
+	public String listPage(Pagination pagination, Model model) {
 		
-		int boardCount = boardservice.boardCount();
+		int page = pagination.getPage();
+		page = page != 0 ? page : 1;
+		String search = pagination.getSearch();
+		String keyword = pagination.getKeyword();
+		//int pageNum = (page-1)*3;
+		
+		int boardCount = boardservice.boardCount(pagination);
 		
 		pagination = new Pagination(boardCount, page);
 		pagination.setSearch(search);
@@ -193,18 +196,19 @@ public class Controller {
 	
 	// 게시물 검색
 	@RequestMapping(value="/board/search", method=RequestMethod.GET)
-	public String search( Model model, Pagination pagination,
-			@RequestParam(value="page", required=false) int page, 
-			@RequestParam(value="search", required=false, defaultValue="bTitle") String search,
-			@RequestParam(value="keyword", required=false, defaultValue="") String keyword) {
+	public String search(Model model, Pagination pagination) {
 		
-		int boardCount = boardservice.boardCount();
-		int pageNum = (page -1)*3;
+		int page = pagination.getPage();
+		String search = pagination.getSearch();
+		String keyword = pagination.getKeyword();
 		
+		int boardCount = boardservice.boardCount(pagination);
 		
 		pagination = new Pagination(boardCount, page);
+		pagination.setSearch(search);
+		pagination.setKeyword(keyword);
 	
-		model.addAttribute("pagination","pagination");
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("select", page);
 		
 		
