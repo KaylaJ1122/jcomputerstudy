@@ -87,12 +87,21 @@
 			
 		</tr>
 		
-		<c:forEach  items="${list}" var="list">
+		<c:forEach var="list" items="${list}" >
 	      	<tr>
 	      		<td>${list.bId }</td>
-	      		<td> 
-	      			<a href="/board/view?bId=${list.bId }">${list.bTitle}</a>
-	      		</td>
+	      		<c:choose>
+	      			<c:when test="${list.bGroupOrd ne 1}">
+	      				<td> 
+	      					<a href="/board/view?bId=${list.bId }">[답글]${list.bTitle}</a>
+	      				</td>
+	      			</c:when>
+	      			<c:otherwise>
+	      				<td>
+	      					<a href="/board/view?bId=${list.bId }">${list.bTitle }</a>
+	      				</td>
+	      			</c:otherwise>
+	      		</c:choose>
 	      		<td>${list.bContent }</td>
 	      		<td>${list.bWriter }</td>
 	      		<td>${list.bView }</td>

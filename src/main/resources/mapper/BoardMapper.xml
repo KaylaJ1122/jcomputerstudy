@@ -158,10 +158,14 @@
 	<!-- 게시글 검색 -->
 	<select id="listPage" resultType="Board" parameterType="Pagination">
 		SELECT		b_id as bId,
-					b_title as bTitle,
-					b_content as bContent,
-					b_writer as bWriter,
-					b_view as bView
+						b_title as bTitle,
+						b_content as bContent,
+						b_writer as bWriter,
+						b_view as bView,
+						b_group as bGroup,
+						b_groupOrd as bGroupOrd,
+						b_depth as bDepth
+					
 		FROM		jc_board
 		<if test='search.equals("bTitle")'>
 			WHERE b_title LIKE concat('%', #{keyword}, '%')

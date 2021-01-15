@@ -118,7 +118,7 @@ public class Controller {
 		
 		// 게시물 생성
 		boardservice.write(board);
-		return "redirect:/board/list"; 
+		return "redirect:/board/listPage"; 
 	}
 	
 	// 게시물 조회
@@ -158,7 +158,7 @@ public class Controller {
 	public String modifyProcess(Board board) {
 		
 		boardservice.modify(board);
-		return "redirect:/board/list?bId=" + board.getbId();
+		return "redirect:/board/listPage?bId=" + board.getbId();
 	}
 	
 	// 게시물 삭제
@@ -166,7 +166,7 @@ public class Controller {
 	public String delete(int bId, Model model) {
 		boardservice.delete(bId);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/listPage";
 	}
 	
 	// 게시물 페이징
@@ -228,7 +228,7 @@ public class Controller {
 		//System.out.println(board);
 		boardservice.writeForm(board);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/listPage";
 	}
 	
 }

@@ -67,12 +67,6 @@
 	      		<td>${list.bView }</td>
 	      	</tr>
       	</c:forEach>
-      	
-      	
-      	
-      	
-      
-      
       </table>
 
 </body>
